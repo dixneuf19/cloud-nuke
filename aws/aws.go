@@ -1974,10 +1974,13 @@ func StartProgressBarWithLength(length int) {
 }
 
 // NukeAllResources - Nukes all aws resources
-func NukeAllResources(account *AwsAccountResources, regions []string) error {
-	// Set the progressbar width to the total number of nukeable resources found
-	// across all regions
-	StartProgressBarWithLength(account.TotalResourceCount())
+func NukeAllResources(account *AwsAccountResources, regions []string, startProgressBar bool) error {
+
+	if startProgressBar {
+		// Set the progressbar width to the total number of nukeable resources found
+		// across all regions
+		StartProgressBarWithLength(account.TotalResourceCount())
+	}
 
 	telemetry.TrackEvent(commonTelemetry.EventContext{
 		EventName: "Begin nuking resources",
