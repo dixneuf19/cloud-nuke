@@ -147,10 +147,15 @@ func nukeAllResourcesInRegion(account *AwsAccountResources, region string) {
 }
 
 // NukeAllResources - Nukes all aws resources
-func NukeAllResources(account *AwsAccountResources, regions []string) error {
+func NukeAllResources(account *AwsAccountResources, regions []string, startProgressBar bool) error {
 	// Set the progressbar width to the total number of nukeable resources found
 	// across all regions
-	progressbar.StartProgressBarWithLength(account.TotalResourceCount())
+
+	if startProgressBar {
+		// Set the progressbar width to the total number of nukeable resources found
+		// across all regions
+		progressbar.StartProgressBarWithLength(account.TotalResourceCount())
+	}
 
 	telemetry.TrackEvent(commonTelemetry.EventContext{
 		EventName: "Begin nuking resources",
